@@ -36,7 +36,7 @@ To optimize for analytical performance, the data was normalized from 81 columns 
 
 ### 2. Prepare the Data
 Due to file size limits, the raw dataset is not included in this repository. 
-1. Download the `prosperLoanData.csv` from [Kaggle](https://www.kaggle.com/datasets/yash612/prosper-loan-data).
+1. Download the `prosperLoanData.csv` from [Kaggle](https://www.kaggle.com/datasets/nurudeenabdulsalaam/prosper-loan-dataset).
 2. Place the file inside the `/data` folder of this project.
 
 ### 3. Setup the Environment
