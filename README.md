@@ -34,7 +34,12 @@ To optimize for analytical performance, the data was normalized from 81 columns 
 * [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed.
 * Python 3.x installed.
 
-### 2. Setup the Environment
+### 2. Prepare the Data
+Due to file size limits, the raw dataset is not included in this repository. 
+1. Download the `prosperLoanData.csv` from [Kaggle](https://www.kaggle.com/datasets/yash612/prosper-loan-data).
+2. Place the file inside the `/data` folder of this project.
+
+### 3. Setup the Environment
 Clone the repository and start the database container. This will automatically run `sql/init.sql` to build the schema.
 ```bash
 git clone [https://github.com/Haipham2002/P2P-Lending-Data-Warehouse.git](https://github.com/Haipham2002/P2P-Lending-Data-Warehouse.git)
