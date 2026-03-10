@@ -1,46 +1,42 @@
-# Prosper P2P Lending Data Warehouse & ETL Pipeline
+# Prosper P2P Lending: Data Warehouse & ETL Pipeline
 
-## 📌 Project Overview
-An end-to-end Data Engineering pipeline that extracts raw P2P lending data, transforms it into a normalized **Star Schema**, and loads it into a **MySQL Data Warehouse**. This project enables efficient risk analysis and business reporting on over 113,000 loan records.
+An end-to-end Data Engineering project that extracts, transforms, and loads over 113,000 P2P lending records into a containerized MySQL Star Schema.
 
-## 🏗 Architecture (Star Schema)
-The data is organized into a Star Schema to optimize query performance and reduce redundancy:
-- **Fact Table**: `fact_loans` (Loan amounts, rates, status, and dates).
-- **Dimension Tables**: 
-  - `dim_borrower`: Normalized borrower profiles (Occupation, Income, State).
-  - `dim_listing_category`: Mapping of numeric category codes to readable names.
+## Project Overview
+The goal of this project is to transform raw, flat financial data from Prosper (P2P Lending) into a structured Data Warehouse. This allows for complex analytical queries (e.g., ROI by Credit Grade, Borrower Risk Profiles) that are impossible or inefficient to run on raw CSV files.
 
+[Image of an ETL pipeline architecture diagram from source to data warehouse]
 
+---
 
-## 🛠 Tech Stack
-- **Language**: Python 3.13
-- **Data Manipulation**: Pandas
-- **Database**: MySQL 8.0
-- **ORM/Connection**: SQLAlchemy & PyMySQL
+## Data Architecture (Star Schema)
+To optimize for analytical performance, the data was normalized from 81 columns into a **Star Schema**:
 
-## 🚀 ETL Workflow
-1. **Extract**: Loads 113,937 rows from `prosper_raw.csv`.
-2. **Transform**: 
-   - **Data Cleaning**: Handled missing values in `ProsperRating` and `Occupation`.
-   - **Deduplication**: Identified and removed ~870 duplicate records based on `LoanKey` to maintain Primary Key integrity.
-   - **Normalization**: Separated data into dimensions and a fact table.
-   - **Standardization**: Converted dates to SQL-friendly `YYYY-MM-DD` format.
-3. **Load**: Pushed data to MySQL in optimized chunks using SQLAlchemy.
+* **Fact Table (`fact_loans`):** Contains measurable, quantitative data about each loan (Amount, Rate, Monthly Payment).
+* **Dimension Table (`dim_borrower`):** Contains descriptive attributes of the borrower (Occupation, State, Income Range).
+* **Dimension Table (`dim_listing_category`):** A lookup table for the 20+ loan categories (Debt Consolidation, Business, etc.).
 
-## ⚠️ Key Technical Challenges Solved
-- **Primary Key Integrity**: Handled `IntegrityError` by implementing a deduplication step in Python after discovering duplicate `LoanKeys` in the source data.
-- **Relational Constraints**: Managed `Foreign Key` dependencies by ensuring Dimension tables are loaded prior to the Fact table.
-- **Schema Mapping**: Aligned Python DataFrame headers (CamelCase) with MySQL table columns (snake_case) to ensure seamless loading.
+[Image of a star schema data model showing fact and dimension tables]
 
-## 📊 Sample Analysis
-With this warehouse, we can now run complex queries like:
-- **Risk Analysis**: Calculating default rates per credit grade.
-- **Portfolio Growth**: Monthly trends of total loan volume.
-- **Demographic Insights**: Identifying high-volume lending states.
+---
 
-## 💻 How to Setup
-1. Clone the repository.
-2. Install dependencies: `pip install -r requirements.txt`.
-3. Run `warehouse/create_tables.sql` in your MySQL instance.
-4. Update `config/db_config.py` with your credentials.
-5. Run the orchestrator: `python scripts/main.py`.
+## Tech Stack
+* **Language:** Python 3.13 (Pandas, SQLAlchemy)
+* **Database:** MySQL 8.0 (Dockerized)
+* **Infrastructure:** Docker & Docker Compose
+* **Tools:** Git, MySQL Workbench
+
+---
+
+## Quick Start (How to Run)
+
+### 1. Prerequisites
+* [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed.
+* Python 3.x installed.
+
+### 2. Setup the Environment
+Clone the repository and start the database container. This will automatically run `sql/init.sql` to build the schema.
+```bash
+git clone [https://github.com/Haipham2002/P2P-Lending-Data-Warehouse.git](https://github.com/Haipham2002/P2P-Lending-Data-Warehouse.git)
+cd P2P-Lending-Data-Warehouse
+docker-compose up -d
