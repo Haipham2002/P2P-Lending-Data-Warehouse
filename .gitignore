@@ -1,0 +1,15 @@
+# Ignore the raw data
+data/prosperLoanData.csv
+
+# Ignore Python temporary files
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+
+# Ignore logs
+logs/*.log
+
+# Ignore local environment variables (passwords)
+.env
